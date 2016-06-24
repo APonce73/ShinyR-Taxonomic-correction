@@ -53,12 +53,23 @@ shinyServer(function(input, output, session) {
     VALOR1<-LL1$matchedname
     rm(LL1)
     #VALOR<-levels(taxize1[4,1])[2]
+    #L <- c()
+    #L2 <- c(input$gbif)
+    #FF <- c(L,L2)
     
     LL2 <- occ(VALOR1, from="inat", has_coords=T)
     LL2 <- occ2df(LL2)
-    LL2 <- data.frame(LL2$longitude, LL2$latitude)
+    LL2 <- na.omit(data.frame(LL2$longitude, LL2$latitude))
     names(LL2)[1] <- c("longitude")
     names(LL2)[2] <- c("latitude")
+    
+    
+    #LL3 <- occ(VALOR1, from=input$gbif, has_coords=T)
+    #LL3 <- occ2df(LL3)
+    #LL3 <- data.frame(LL3$longitude, LL3$latitude)
+    #names(LL3)[1] <- c("longitude")
+    #names(LL3)[2] <- c("latitude")
+    #LL4 <- rbind(LL2,LL3)
     print(LL2)
     })
     
