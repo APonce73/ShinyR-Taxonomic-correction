@@ -47,28 +47,40 @@ shinyServer(function(input, output, session) {
     input$update
     require(leaflet)
     require(spocc)
+    require(rgbif)
     #require(ggmap)
     #require(ggplot2)
     require(taxize)
     VALOR <- input$text
+    #VALOR <- c("Gossypium hirsutum")
     LL1 <- tnrs(query = VALOR, source = "iPlant_TNRS")
-    LL1
+    #LL1
     LL1a <- as.data.frame(t(LL1))
     VALOR1 <- LL1$matchedname
-    rm(LL1)
+    #VALOR2 <- LL1$acceptedname
+    #rm(LL1)
     #VALOR<-levels(taxize1[4,1])[2]
     #L <- c()
     #L2 <- c(input$gbif)
     #FF <- c(L,L2)
     
-    LL2 <- occ(VALOR1, from = "gbif", has_coords = T)
+    LL2 <- occ_search(scientificName = VALOR1, from = "gbif", hasCoordinate = T, country = "MX")
     #LL2
-    LL2 <- occ2df(LL2)
-    str(LL2)
+    class(LL2)
+    names(LL2)
+    #LL2$data[,3:4]
+    LL2.1 <- as.data.frame(LL2$data[,3:4])
     #LL2
-    LL2 <- na.omit(data.frame(LL2$longitude, LL2$latitude))
-    names(LL2)[1] <- c("lng")
-    names(LL2)[2] <- c("lat")
+    
+    #LL2.1 <- na.omit(LL3)
+    #dim(LL2.1)
+    LL3 <- LL2.1[apply(LL2.1, 1, sum) != 0,]
+    #dim(LL3)
+    #head(LL3,50)
+    #rm(LL2)
+    #rm(LL2.1)
+    #rm(VALOR1)
+    #rm(VALOR)
     
     #LL3 <- occ(VALOR1, from=input$gbif, has_coords=T)
     #LL3 <- occ2df(LL3)
@@ -85,18 +97,22 @@ shinyServer(function(input, output, session) {
     #pal3 <- pal2
     TTT <- sample(brewer.pal(8,"Dark2"),1)
     Goldberg <- points()
-    #Goldberg <- LL2
+    #Goldberg <- LL3
+    names(Goldberg)[2] <- c("lng")
+    names(Goldberg)[1] <- c("lat")
     
     #Goldberg1 <-InterEstellar()
     leaflet(data = Goldberg) %>%
       clearShapes() %>%
       addTiles() %>%
-      setView(lng=-101.383331, lat=22.583332, zoom=5, options=list(reset=T))%>%
+      setView(lng = -101.383331, lat = 22.583332, zoom = 5, options = list(reset = T)) %>%
       #addCircleMarkers(~longitude, ~latitude, radius=2, fillOpacity = 0.5, color=TTT[1])%>%
-      addCircleMarkers(Goldberg$lng, Goldberg$lat, weight=4, radius=7, stroke=F, fillOpacity = 0.8, color=TTT[1],clusterOptions = markerClusterOptions())%>%
+      addCircleMarkers(~lng, ~lat, weight = 4, radius = 7, stroke = F, 
+                       fillOpacity = 0.8, color = TTT[1], 
+                       clusterOptions = markerClusterOptions()) %>%
       #addMeasure(primaryLengthUnit = "kilometers", primaryAreaUnit = "hectares",activeColor = '#FF00FF')%>%
-      #addProviderTiles("OpenStreetMap.DE")
-      addProviderTiles("OpenStreetMap.HOT")
+      addProviderTiles("OpenStreetMap.DE")
+      #addProviderTiles("OpenStreetMap.HOT")
     #addPolygons(stroke=F, smoothFactor=0, fillColor='#FF00FF', fillOpacity=0.7, data=points())
     #mapOptions(zoomToLimits="first")
     #addCircleMarkers(~longitude, ~latitude, popup =paste(sep = " ","Altitud=",as.factor(TableL$Altitud), "msnm","Altura del maiz",as.factor(TableL$Altura_de_planta),"cm"), radius=3, fillOpacity = 0.5, color=UUUH())
@@ -118,8 +134,8 @@ shinyServer(function(input, output, session) {
 #    Goldberg <- points()
 #    print(Goldberg)
 #  })
-  output$map <- renderPlot({
-    mymap()
-  })
+#  output$mymap1 <- renderPlot({
+#    mymap()
+#  })
 })
   

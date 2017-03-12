@@ -1,0 +1,10 @@
+name: ShinyR-Taxonomic-correction
+title: ShinyR-Taxonomic-correction
+account: conabio
+server: shinyapps.io
+appId: 163040
+bundleId: 743219
+url: https://conabio.shinyapps.io/ShinyR-Taxonomic-correction/
+when: 1489296681.93476
+asMultiple: FALSE
+asStatic: FALSE

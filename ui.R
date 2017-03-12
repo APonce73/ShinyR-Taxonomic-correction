@@ -1,5 +1,5 @@
 library(shiny)
-library(shinydashboard)
+#library(shinydashboard)
 library(leaflet)
 
 
@@ -15,13 +15,13 @@ library(leaflet)
 
 shinyUI(navbarPage(
   #title = "Mauricio Bellon paper",
-  title = "Taxonomic corrections",
-  h5("We use two different packages in R to do almost the same analysis. The functions in R use different algorithm to correct"),
-  h5("mispelling or synonyms of flora."),
-  h3("Why Plant list?"),
-  h5("Plant list is a database with the support of Missouri Botanical Garden and the Royal Botanical Gardens, Kew"),
-  h4("Important notes:"),
-  h5("if you decide to use this plataform, please do credits to each package in R!"),
+  title = "Correcciones Taxonómicas",
+  h3("Se utilizaron dos paquetes en R que realizan análisis similares. Sin embargo, utilizan distintos algoritmos"),
+  h3("para flora que tenga algún error ortográfico o si esta en categoría de sinonímia o en revisión."),
+  h2("¿Porque Plant List?"),
+  h3("Plant list es una base de datos con el apoyo del Missouri Botanical Garden y the Royal Botanical Gardens, Kew"),
+  h4("Notas Importantes:"),
+  h5("Si ésta plataforma te sirve, no olvides citar, los paquetes en R"),
   
   
   
@@ -49,20 +49,14 @@ shinyUI(navbarPage(
                  h5("aponce73pm@gmail.com"),
                  br(),
                  h4("Code:"),
-                 tags$a(href = "https://github.com/APonce73/ShinyR-Taxonomic-correction", "Github"),
-                 
-                 
-                 #c("All", unique(as.character(TableL$Raza_primaria)))),
-                 
-                 
-                 
-                 width = 2),
+                 tags$a(href = "https://github.com/APonce73/ShinyR-Taxonomic-correction", "Github"), width = 2),
+               
                fluidRow(
                  #verbatimTextOutput("summary"),
                  #column(9,leafletOutput("mymap", width = "1200", height = "800"))
                
                  column(5,
-                        h3("Taxonstand package result:"),
+                        h3("Resultado del paquete Taxonstand:"),
                         h4(tableOutput("TableL")),
                         h4("Citation of Taxonstand package:"),
                         h5("Cayuela, L. Granzow-de la Cerda,I. Albuquerque FS, Golicher DJ (2012),"), 
@@ -71,7 +65,7 @@ shinyUI(navbarPage(
                         h5("doi: 10.1111/j.2041-210X2012.00232.X")
                  ),
                  column(3,
-                        h3("taxize package result:"),
+                        h3("Resultado del paquete taxize:"),
                         h4(tableOutput("TableL1")),
                         h4("Citation of taxize package:"),
                         h5("Scott Chamberlain and Eduard Szocs (2013). taxize -"), 
@@ -81,24 +75,20 @@ shinyUI(navbarPage(
                         
                  ),
                  
-                 column(9,h5("All sample points (dots) come from iNaturalist database"),
-                        column(9,leafletOutput("mymap",width = "1200", height = "800")),
+#                 column(8,
+                         column(11,leafletOutput("mymap", width = "1000", height = "800"),
+                        h4("Los registros presentes en el mapa probienen del GBIF, con un máximo de 500"),
                         h4("Citation of leaflet package:"),
-                        h6("Citation: : Joe Cheng and Yihui Xie (2016). Leaflet: Create Interactive web Maps with the JavaScript 'leaflet' Library"), 
-                        h6("R package version 1.0.1.900."),    
-                        h6("http://rstudio.github.io/leaflet/")
+                        h5("Citation: : Joe Cheng and Yihui Xie (2016). Leaflet: Create Interactive web Maps with the JavaScript 'leaflet' Library"), 
+                        h5("R package version 1.0.1.900."),    
+                        h5("http://rstudio.github.io/leaflet/"))
                  )
-                 
-                 
-                 
                  
                  )
                #leafletOutput("mymap", width = "100%", height = "100%")
              )
-           )) 
-  
-  
-))
+         )) 
+)
 
 
 
